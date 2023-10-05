@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useStore } from '../../context'
 import Login from './Login'
 import SingUp from './SingUp'
+import { useStore } from '../../hooks'
 
-const AuthPage = () => {
+export const AuthPage = () => {
     const { store } = useStore()
     const [isSigned, setIsSigned] = useState(true)
 
@@ -42,4 +42,3 @@ const AuthPage = () => {
     )
 }
 
-export default AuthPage

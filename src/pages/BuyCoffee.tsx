@@ -1,9 +1,9 @@
 import React, { useLayoutEffect, useEffect, useState } from 'react'
 import { Button } from '../components'
 import { useParams } from 'react-router-dom'
-import { useStore } from '../context'
-import { IPFS } from '../utils/api'
-import { listenForTransactionMine, personContractFactory } from '../utils/General'
+import { useStore } from '../hooks'
+import { IPFS } from '../service'
+import { listenForTransactionMine, personContractFactory } from '../helpers'
 import { TypeForm, stageType } from '../types'
 import { ethers, providers } from 'ethers'
 

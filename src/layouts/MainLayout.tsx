@@ -1,9 +1,8 @@
 import { PropsWithChildren } from 'react'
-import Header from './components/Header'
-import Footer from './components/Footer'
+import { Header, Footer } from '../components'
 
 
-const Layout = ({ children }: PropsWithChildren) => (
+export const MainLayout = ({ children }: PropsWithChildren) => (
     <>
         <Header />
         <div className=' pt-[91px]'>
@@ -13,5 +12,3 @@ const Layout = ({ children }: PropsWithChildren) => (
     </>
 
 )
-
-export default Layout

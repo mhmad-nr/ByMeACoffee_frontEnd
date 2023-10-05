@@ -1,6 +1,6 @@
 import { Button } from "../../components"
-import { useStore } from "../../context"
-import { buyMeACoffeeContractFactory, isValidAddress } from "../../utils/General"
+import { useStore } from "../../hooks"
+import { buyMeACoffeeContractFactory, isValidAddress } from "../../helpers"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"

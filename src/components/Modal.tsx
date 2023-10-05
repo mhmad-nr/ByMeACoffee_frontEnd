@@ -7,7 +7,7 @@ type props = {
     onClose: () => void,
     disableClose?: boolean
 }
-const Modal = ({ children, visable, onClose, disableClose }: PropsWithChildren<props>) => {
+export const Modal = ({ children, visable, onClose, disableClose }: PropsWithChildren<props>) => {
     useEffect(() => {
         if (visable) {
             document.body.style.overflow = 'hidden';
@@ -36,5 +36,3 @@ const Modal = ({ children, visable, onClose, disableClose }: PropsWithChildren<p
         }
     </>
 }
-
-export default Modal

@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
-import { saveToClipboard, rString } from '../utils/General'
+import { saveToClipboard, rString } from '../helpers/general-helper'
 import { ReactComponent as Copy } from '../assets/icons/copy.svg'
 
-import Modal from './Modal';
+import { Modal } from '.';
 import { Button } from '.';
-import { useStore } from '../context';
+import { useAction, useStore } from '../hooks';
 
 type typePorps = {
     address: string
@@ -21,15 +21,17 @@ const initState = {
     activeAddress: ""
 }
 export const AccountAddress = ({ address }: typePorps) => {
-    const { store, setStore } = useStore()
+    const { store } = useStore()
+    const { changeAccount } = useAction()
     const [state, setState] = useState<typeState>(initState)
     const setModal = () => setState({ ...state, showModal: !state.showModal })
+
     useEffect(() => {
         setState({ ...state, activeAddress: store.activeAccount })
     }, [])
 
     const changeWallet = () => {
-        setStore({ ...store, activeAccount: state.activeAddress })
+        changeAccount(state.activeAddress)
         setState(initState)
     }
 

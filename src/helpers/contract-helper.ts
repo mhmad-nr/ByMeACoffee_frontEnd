@@ -1,14 +1,6 @@
 import { ethers } from "ethers";
-import { toast } from "react-toastify"
-import { abi as bmaContractABI, address as bmaContractAddress } from "./contracts/buyMeACoffee.json";
-import { abi as personContractABI } from "./contracts/Person.json";
-export const rString = (str: string, max: number) => str.substring(0, max) + "..." + str.substring(str.length - max)
-export const sameMembers = (firstArray: any[], secondArray: any[]) => {
-    const containsAll = (first: any[], second: any[]) =>
-        second.every(secondItem => first.includes(secondItem))
-
-    return containsAll(firstArray, secondArray) && containsAll(secondArray, firstArray);
-}
+import { abi as bmaContractABI, address as bmaContractAddress } from "../utils/contracts/buyMeACoffee.json";
+import { abi as personContractABI } from "../utils/contracts/Person.json";
 export const isValidAddress = (address: string): boolean => {
     const isAddress = ethers.utils.isAddress(address)
     if (!isAddress) return false
@@ -56,21 +48,4 @@ export const listenForTransactionMine = async (transactionResponse: any, provide
             console.log(`Mined in ${transactionReceipt.blockHash} successfully`);
         })
     })
-}
-export const saveToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text)
-    toast('Copied in clipboard', {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-    });
-}
-export function concat<T>(one: T[], two: T[]): T[] {
-    const c = one.concat(two)
-    return c.filter((item, pos) => c.indexOf(item) === pos)
 }

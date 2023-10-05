@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
 import { ReactComponent as BMC } from '../assets/icons/bmc-icon.svg'
-import { useStore } from '../context'
 import { AccountAddress, Button } from '.'
 import { useNavigate } from "react-router-dom"
-const Header = () => {
+import { useStore } from '../hooks'
+export const Header = () => {
     const navigate = useNavigate()
     const { store } = useStore()
     const { activeAccount, accounts } = store
@@ -54,5 +54,3 @@ const Header = () => {
 
     )
 }
-
-export default Header

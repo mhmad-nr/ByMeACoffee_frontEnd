@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ethers } from 'ethers'
-import { concat, personContractFactory, saveToClipboard } from '../utils/General'
-import { useStore } from '../context'
+import { concat, personContractFactory, saveToClipboard } from '../helpers'
 import { TypeForm, stageType } from '../types'
-import { IPFS } from '../utils/api'
+import { IPFS } from '../service'
 import Loading from '../components/Loading'
-import ABI from "../utils/contracts/Person.json"
 import { toast } from 'react-toastify'
+import { useStore } from '../hooks'
 type TypeMemo = {
   from: string,
   timestamp: string,

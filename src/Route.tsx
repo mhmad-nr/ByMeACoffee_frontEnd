@@ -1,13 +1,13 @@
-import { useEffect, useState, lazy } from 'react';
+import { useEffect, useState, lazy, useLayoutEffect } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import Layout from './Layout';
-import Modal from './components/Modal';
-import { useStore } from './context';
-import { initStore, stageType } from './types';
+import { MainLayout } from './layouts';
+import { useAction, useStore } from './hooks';
+import { stageType } from './types';
 import { toast } from "react-toastify"
-import { sameMembers } from './utils/General';
-import { Button } from './components';
-import AuthPage from './pages/AuthPage';
+import { sameMembers } from './helpers';
+import { Button, Modal } from './components';
+import { AuthPage } from './pages';
+import storage from './utils/storage';
 
 const Home = lazy(() => import('./pages/Home'));
 const Profile = lazy(() => import('./pages/Profile'));
@@ -24,7 +24,7 @@ const initState = {
     currentAddress: ""
 }
 const AppRoute = () => {
-    const { store, setStore } = useStore()
+    const { store } = useStore()
     const [state, setState] = useState<stateType>(initState)
     useEffect(() => {
         if (window.ethereum) {
@@ -35,12 +35,26 @@ const AppRoute = () => {
         }
     }, [])
 
+    const { readAccounts } = useAction()
+    useLayoutEffect(() => {
+        const { getAccount, getAccounts } = storage
+        const account = getAccount()
+        const accounts = getAccounts()
 
+        console.log(account);
+        if (account && accounts) {
+            readAccounts(account, JSON.parse(accounts))
+            console.log("useLayoutEffect");
+        }
+
+    }, [])
+
+
+    const { initAccounts, resetAccounts } = useAction()
     const setWallets = (activeAccount: string, addresses: string[]) => {
         toast.success("Your Wallet has been connected")
         if (sameMembers(addresses, store.accounts)) return
-
-        setStore({ activeAccount, accounts: addresses })
+        initAccounts(activeAccount, addresses)
         setState(initState)
     }
     const isWalletConnected = async () => {
@@ -63,7 +77,7 @@ const AppRoute = () => {
     const checkMetamaskHasChanged = () => {
         window.ethereum.on('accountsChanged', (accounts: string[]) => {
 
-            if (!sameMembers(accounts, store.accounts)) {
+            if (!sameMembers<string>(accounts, store.accounts)) {
                 setState({ ...state, accounts, modalStage: stageType.STAGE_ONE })
 
             } else {
@@ -72,7 +86,7 @@ const AppRoute = () => {
         })
     }
     const clearAddress = () => {
-        setStore(initStore)
+        resetAccounts()
         toast.warning("Your Wallet has been disconnected")
     }
     // console.log(store);
@@ -89,10 +103,7 @@ const AppRoute = () => {
             <Modal visable={state.modalStage != stageType.STAGE_HIDE} onClose={setModal}>
                 {state.modalStage == stageType.STAGE_FIRST_ERROR && <>
                     <h2>To use this app, you need to <a href="https://metamask.io/" target="_blank" className="font-semibold text-Blue cursor-pointer">install MetaMask</a> on your browser.</h2></>}
-
-
                 {state.modalStage == stageType.STAGE_ONE && <>
-
                     <div className='flex flex-col h-16 gap-y-2 overflow-y-scroll'>
                         {state.accounts.map((address) => {
                             return <div key={address}
@@ -107,10 +118,8 @@ const AppRoute = () => {
                     </div>
                 </>}
             </Modal>
-
-
             <Router>
-                <Layout>
+                <MainLayout>
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/profile/:address" element={<Profile />} />
@@ -118,7 +127,7 @@ const AppRoute = () => {
                         <Route path="/authpage" element={<AuthPage />} />
                         <Route path='*' element={<NotFound />} />
                     </Routes>
-                </Layout>
+                </MainLayout>
             </Router>
         </>
     )

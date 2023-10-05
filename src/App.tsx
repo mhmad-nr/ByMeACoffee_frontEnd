@@ -1,4 +1,4 @@
-import React from 'react';
+import { Suspense } from 'react';
 import AppRoute from './Route'
 import { StoreProvider } from './context'
 import { ToastContainer } from "react-toastify"
@@ -11,8 +11,7 @@ declare global {
 function App() {
 
   return (
-    <React.Suspense fallback={<Loading />}>
-
+    <Suspense fallback={<Loading />}>
       <StoreProvider>
         <AppRoute />
         <ToastContainer
@@ -28,7 +27,7 @@ function App() {
           theme="light"
         />
       </StoreProvider>
-    </React.Suspense>
+    </Suspense>
 
   )
 }

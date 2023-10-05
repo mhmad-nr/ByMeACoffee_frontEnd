@@ -2,7 +2,7 @@ import React from 'react'
 import { ReactComponent as GITHUB } from '../assets/icons/github-icon.svg'
 import { Link } from 'react-router-dom'
 
-const Footer = () => {
+export const Footer = () => {
   return (
     <div>
       <div className='mx-auto lg_w-[1128px] py-4 flex justify-between items-center'>
@@ -17,4 +17,3 @@ const Footer = () => {
   )
 }
 
-export default Footer

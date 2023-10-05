@@ -1,23 +1,23 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Button } from "../components"
 import landingImage from "../assets/images/landing-image.png"
-import { useStore } from "../context"
 import { toast } from "react-toastify";
 import { ethers } from "ethers"
 import { useNavigate } from 'react-router-dom';
-import { buyMeACoffeeContractFactory } from "../utils/General";
+import { buyMeACoffeeContractFactory } from "../helpers";
+import { useStore } from "../hooks";
 
 
 
 const Home = () => {
   const { store } = useStore()
   const navigate = useNavigate();
+
   const [state, setState] = useState({
     searchDisabled: false,
     searchText: ""
   })
-  useEffect(() => {
-  }, [])
+
   const searchAddress = async () => {
     if (state.searchDisabled) return
     if (!ethers.utils.isAddress(state.searchText)) {

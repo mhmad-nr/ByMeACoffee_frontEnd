@@ -1,16 +1,16 @@
-import { useState, useEffect, useRef, ChangeEvent } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import image from "../../assets/images/img.png";
 import { Button } from '../../components';
-import { Formik, ErrorMessage, Field, Form, FastField } from 'formik';
+import { Formik, ErrorMessage, Field, Form } from 'formik';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
-import { IPFS } from '../../utils/api';
+import { IPFS } from '../../service/api-ipfs';
 import { ResponseType, TypeForm, stageType } from '../../types';
-import Modal from '../../components/Modal';
+import { Modal } from '../../components';
 import { ReactComponent as LoadingSvg } from '../../assets/icons/loading.svg'
 import { useNavigate } from 'react-router-dom';
-import { useStore } from '../../context';
-import { buyMeACoffeeContractFactory, isValidAddress, listenForEmitEvent, listenForTransactionMine } from '../../utils/General';
+import { useStore } from '../../hooks';
+import { buyMeACoffeeContractFactory, isValidAddress, listenForEmitEvent, listenForTransactionMine } from '../../helpers';
 import { CONTRACT_ERROR } from '../../utils/constant';
 
 const englishRegex = /^[A-Za-z]+$/;
